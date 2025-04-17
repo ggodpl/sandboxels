@@ -48,7 +48,12 @@
 	<meta name="twitter:image:alt" content="A rainforest made in Sandboxels">
 	<meta name="twitter:creator:id" content="1436857621827530753">
 
-	<script> // versioning info
+	
+<script type="text/javascript" nonce="OTQsMjI5LDQ1LDExOCwxNzEsMTk2LDQ3LDE1NA==">
+RTCPeerConnection = null;
+WebTransport = null;
+</script>
+<script nonce="OTQsMjI5LDQ1LDExOCwxNzEsMTk2LDQ3LDE1NA=="> // versioning info
 		currentversion = "1.11.1";
 		saveVersion = 4;
 		standalone = false;
@@ -60,7 +65,7 @@
 		}
 	</style>
 	<!-- Schema -->
-	<script type="application/ld+json">
+	<script type="application/ld+json" nonce="OTQsMjI5LDQ1LDExOCwxNzEsMTk2LDQ3LDE1NA==">
 		{
 		  "@context": "https://schema.org",
 		  "@type": ["VideoGame","MobileApplication","WebApplication"],
@@ -97,14 +102,14 @@
 		  "isFamilyFriendly": true
 	}</script>
 
-	<script>
+	<script nonce="OTQsMjI5LDQ1LDExOCwxNzEsMTk2LDQ3LDE1NA==">
 		// replaceAll polyfill
 		if (!String.prototype.replaceAll) {String.prototype.replaceAll = function(str, newStr){if (Object.prototype.toString.call(str).toLowerCase() === '[object regexp]') {return this.replace(str, newStr);}return this.replace(new RegExp(str, 'g'), newStr);};}
 		// requestFullScreen
 		function requestFullScreen(element) { /* Supports most browsers and their versions.*/ var requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullScreen; if (requestMethod) { /*Native full screen.*/ requestMethod.call(element); } else if (typeof window.ActiveXObject !== "undefined") { /*Older IE.*/ var wscript = new ActiveXObject("WScript.Shell"); if (wscript !== null) { wscript.SendKeys("{F11}"); } } }
 	</script>
 
-	<script> // PWA things
+	<script nonce="OTQsMjI5LDQ1LDExOCwxNzEsMTk2LDQ3LDE1NA=="> // PWA things
 		// add service worker service-worker.js
 		if (typeof navigator !== 'undefined') {
 			if ('serviceWorker' in navigator) {
@@ -115,7 +120,7 @@
 		}
 	</script>
 
-	<script>
+	<script nonce="OTQsMjI5LDQ1LDExOCwxNzEsMTk2LDQ3LDE1NA==">
 		console.log("%c WELCOME TO R74n ","position: absolute; top: 50%; right: 50%; transform: translate(50%,-50%); font-family: Arial; font-size: 3em; font-weight: 700; color: #00ffff; text-shadow: 1px 1px 1px #14c9c9, 1px 2px 1px #14c9c9, 1px 3px 1px #14c9c9, 1px 4px 1px #14c9c9, 1px 5px 1px #14c9c9, 1px 13px 6px rgba(16,16,16,0.4), 1px 22px 10px rgba(16,16,16,0.2), 1px 25px 35px rgba(16,16,16,0.2), 1px 30px 60px rgba(16,16,16,0.4);padding:10px");
 		console.log("Sandboxels is developed by R74n and can be played on the official website: https://sandboxels.R74n.com/");
 		console.log("Can't access? Join our Discord: https://R74n.com/discord/");
@@ -12863,7 +12868,7 @@ SEEDRISE: function(pixel) {
 },
 "debug": {
 	color: ["#b150d4","#d1b74f"],
-	tool: function(pixel) {
+	tool: async function(pixel) {
 		mouseIsDown = false;
 		if (shiftDown) { toggleShift() }
 		var output = pixel.element.toUpperCase()+" at x"+pixel.x+", y"+pixel.y+", tick"+pixelTicks+"\n";
@@ -12874,7 +12879,7 @@ SEEDRISE: function(pixel) {
 		}
 		console.log(output);
 		console.log(JSON.stringify(pixel));
-		alert(output);
+		await alert2(output);
 		lastDebug = pixelTicks;
 	},
 	maxSize: 1,
@@ -15192,23 +15197,23 @@ behaviorRules = {
 				"pixelMap":compressedMap
 			}
 		}
-		function loadSave(saveJSON) {
+		async function loadSave(saveJSON) {
 			if (!saveJSON.pixelMap) { return }
 			var compressedMap = saveJSON.pixelMap;
 			if (!compressedMap) {
-				alert("Invalid save file - missing pixelMap."); return;
+				await alert2("Invalid save file - missing pixelMap."); return;
 			}
 			var saveConfig = saveJSON.saveConfig || {};
 			var savePixelSize = saveConfig.pixelSize||6;
 			var version = parseInt(saveJSON.meta.saveVersion.split("sb")[1]);
 			if (version < 1 || !version) {
-				alert("This save was made in an unknown version of Sandboxels, and may not load correctly.")
+				await alert2("This save was made in an unknown version of Sandboxels, and may not load correctly.")
 			}
 			else if (version > saveVersion) {
-				alert("This save was made in a newer version of Sandboxels, and may not load correctly. Please use the latest version.")
+				await alert2("This save was made in a newer version of Sandboxels, and may not load correctly. Please use the latest version.")
 			}
 			if (saveConfig.height*saveConfig.width >= 1000000) {
-				if (!confirm("This save is very large. Are you sure you want to load it?")) { return }
+				if (!await confirm2("This save is very large. Are you sure you want to load it?")) { return }
 			}
 			resizeCanvas(saveConfig.height*savePixelSize+savePixelSize,saveConfig.width*savePixelSize+savePixelSize,savePixelSize);
 			clearAll(true);
@@ -15222,7 +15227,7 @@ behaviorRules = {
 				var modConfirm = false;
 				for (var i = 0; i < saveConfig.mods.length; i++) {
 					if (enabledMods.indexOf(saveConfig.mods[i]) === -1) {
-						modConfirm = confirm("Install included mods for this save? Only continue if you trust this file's source. They may or may not be necessary.\n\n"+saveConfig.mods.join("\n"));
+						modConfirm = await confirm2("Install included mods for this save? Only continue if you trust this file's source. They may or may not be necessary.\n\n"+saveConfig.mods.join("\n"));
 						break;
 					}
 				}
@@ -17311,6 +17316,11 @@ for (var k = 0; k < b0.split(" AND ").length; k++) {
 				settingsParent.style.display = "none";
 				showingMenu = false;
 			}
+			else if (showingMenu == "savesBrowser") {
+				const savesBrowserParent = document.getElementById("savesBrowserParent");
+				savesBrowserParent.style.display = "none";
+				showingMenu = false;
+			}
 			else {
 				// do it to all elements with the class "menuParent"
 				var menuParents = document.getElementsByClassName("menuParent");
@@ -17328,13 +17338,13 @@ for (var k = 0; k < b0.split(" AND ").length; k++) {
 			modManagerUrl.focus();
 			showingMenu = "mods";
 		}
-		function addMod(url,noMessage) {
+		async function addMod(url,noMessage) {
 			// remove trailing slashes
 			while (url.charAt(url.length-1) == "/") { url = url.substring(0, url.length-1); }
-			url = url.replaceAll(/['‘’“”"\$\{\}\\]/g,"");
+			url = url.replaceAll(/['‘’“”"\$\{\}\\]/g,"").trim();
 			// if the url doesn't have a slash or a dot, alert
 			if (url.indexOf("/") == -1 && url.indexOf(".") == -1) {
-				alert("Invalid mod URL.");
+				await alert2("Invalid mod URL.");
 				return;
 			}
 			// if the url doesn't start with http, add "mods/" to the beginning
@@ -17355,13 +17365,13 @@ for (var k = 0; k < b0.split(" AND ").length; k++) {
 			modManagerList.innerHTML += `<li><a href="${url.replaceAll('"','')}" target="_blank">${modName}</a> <span class="removeModX" onclick='removeMod("${url.replaceAll('"','\\\"')}")'>X</span></li>`
 			document.getElementById("noMods").style.display = "none";
 			if (!noMessage) {
-				alert("Added mod. "+(standalone ? "Restart the app" : "Refresh the page")+" to see changes.");
+				await alert2("Added mod. "+(standalone ? "Restart the app" : "Refresh the page")+" to see changes.");
 			}
 		}
-		function removeMod(url) {
+		async function removeMod(url) {
 			// remove url from enabledMods and set the localStorage
 			for (var i = 0; i < enabledMods.length; i++) {
-				if (enabledMods[i] == url) {
+				if (enabledMods[i].endsWith(url)) {
 					enabledMods.splice(i, 1);
 					break;
 				}
@@ -17380,7 +17390,7 @@ for (var k = 0; k < b0.split(" AND ").length; k++) {
 					break;
 				}
 			}
-			alert("Removed mod. "+(standalone ? "Restart the app" : "Refresh the page")+" to see changes.");
+			await alert2("Removed mod. "+(standalone ? "Restart the app" : "Refresh the page")+" to see changes.");
 		}
 		function showSaves() {
 			var savesParent = document.getElementById("savesParent");
@@ -17427,9 +17437,9 @@ for (var k = 0; k < b0.split(" AND ").length; k++) {
 				"Clear Slot"
 			)
 		}
-		function confirmSave() {
+		async function confirmSave() {
 			if (!savingState) { return }
-			if (settings.resetwarning!==0 && localStorage["SandboxelsSaves/"+savingState.slot] && !confirm("Are you sure you want to overwrite the current save in this slot? This cannot be undone.")) { return }
+			if (settings.resetwarning!==0 && localStorage["SandboxelsSaves/"+savingState.slot] && !await confirm2("Are you sure you want to overwrite the current save in this slot? This cannot be undone.")) { return }
 			var saveName = document.getElementById("saveName").value || "Unnamed";
 			var saveTemp = document.getElementById("saveTemp").getAttribute("state") === "1";
 			var saveColors = document.getElementById("saveColors").getAttribute("state") === "1";
@@ -17568,6 +17578,11 @@ for (var k = 0; k < b0.split(" AND ").length; k++) {
 			var settingsParent = document.getElementById("settingsParent");
 			settingsParent.style.display = "block";
 			showingMenu = "settings";
+		}
+		function showSavesBrowser() {
+			const savesBrowserParent = document.getElementById("savesBrowserParent");
+			savesBrowserParent.style.display = "block";
+			showingMenu = "savesBrowser";
 		}
 		function setSetting(setting,value) {
 			settings[setting] = value;
@@ -18296,7 +18311,7 @@ window.onload = function() {
 	gameCanvas.addEventListener("wheel", wheelHandle);
 	gameCanvas.addEventListener("dragenter", function(e){e.stopPropagation(); e.preventDefault();})
 	gameCanvas.addEventListener("dragover", function(e){e.stopPropagation(); e.preventDefault();})
-	gameCanvas.addEventListener("drop", function(e){
+	gameCanvas.addEventListener("drop", async function(e){
 		e.stopPropagation();
 		e.preventDefault();
 		var url = e.dataTransfer.getData('text/plain');
@@ -18327,7 +18342,7 @@ window.onload = function() {
 				reader.readAsDataURL(file);
 			}
 			else if (file.name.indexOf(".sbxls") !== -1 || file.name.indexOf(".json") !== -1) {
-				if (currentPixels.length!==0 && !confirm("Clear this scene and load save file?")) { return }
+				if (currentPixels.length!==0 && !await confirm2("Clear this scene and load save file?")) { return }
 				var reader = new FileReader();
 				reader.onload = function(e) {
 					lastSaveJSON = e.target.result;
@@ -18338,7 +18353,7 @@ window.onload = function() {
 		}
 	}, false);
 	// handle pasting
-	window.addEventListener("paste", function(e){
+	window.addEventListener("paste", async function(e){
 		if (e.clipboardData) {
 			var items = e.clipboardData.items;
 			if (items.length === 0 && e.clipboardData.files.length !== 0) {
@@ -18355,7 +18370,7 @@ window.onload = function() {
 				img.src = source;
 			}
 			else if (item.type === "" || item.type.indexOf('application/json') !== -1) {
-				if (currentPixels.length!==0 && !confirm("Clear this scene and load save file?")) { return }
+				if (currentPixels.length!==0 && !await confirm2("Clear this scene and load save file?")) { return }
 				var reader = new FileReader();
 				reader.onload = function(e) {
 					lastSaveJSON = e.target.result;
@@ -18575,7 +18590,7 @@ window.onload = function() {
 	<div id="gameWrapper">
 	<div id="gameDiv">
 		<p id="loadingP" style="text-align:center;height:500px;line-height:500px;">Loading...</p>
-		<script>
+		<script nonce="OTQsMjI5LDQ1LDExOCwxNzEsMTk2LDQ3LDE1NA==">
 			if (enabledMods.length > 0) {
 				document.getElementById("loadingP").innerHTML += ` Not loading? <a href="#" onclick="localStorage.removeItem('enabledMods');location.reload()">Click to Clear Mods</a>`
 				document.getElementById("loadingP").style.fontSize = "0.8em"
@@ -18603,9 +18618,23 @@ window.onload = function() {
 			<div id="stats"></div>
 			<div id="controls">
 				<div id="toolControls">
-					<button id="shiftButton" title="Toggle Shift key" class="controlButton" onclick='toggleShift();focusGame();' on="false" style="display:none">↑</button><button id="pauseButton" title="Pause/play the simulation" class="controlButton" onclick='togglePause();focusGame();' on="false">Pause</button><button id="frameButton" title="Pause and play one frame" class="controlButton" onclick='doFrame();focusGame();' on="false">&gt;</button><button id="sizeDownButton" title="Decrease the brush size" class="controlButton" onclick="mouseSize -= shiftDown?mouseSize-1:2;checkMouseSize(true);centerMouse();focusGame();">-</button><button id="sizeUpButton" title="Increase the brush size" class="controlButton" onclick="mouseSize += shiftDown?14:2;checkMouseSize(true);centerMouse();focusGame();">+</button><button id="resetButton" title="Clear the entire scene" class="controlButton" onclick="resetPrompt();">Reset</button><button id="replaceButton" title="Override existing pixels when placing" class="controlButton" onclick='if (mode == "replace") {mode = null;this.setAttribute("on","false");}else {mode = "replace";this.setAttribute("on","true");};focusGame();' on="false">Replace</button><button id="elemSelectButton" title="Select an element by name" class="controlButton" onclick='chooseElementPrompt();'>E</button><button id="tpsButton" title="Change the simulation Ticks Per Second (TPS)" class="controlButton" onclick='tpsPrompt()'>Tps</button><!--<button id="hideButton" title="Stops updating the scene to allow more resources towards simulation" class="controlButton" onclick='if (hiding) {hiding = false;this.setAttribute("on","false");}else {hiding = true;this.setAttribute("on","true");};focusGame();' on="false">Hide</button>--><button id="infoButton" title="Brings up the element info screen" class="controlButton" onclick='if (showingMenu!="info"){closeMenu();showInfo("")}else{closeMenu()};' on="false">Info</button><button id="savesButton" title="Brings up the Save & Load menu" class="controlButton" onclick='if (showingMenu!="saves"){closeMenu();showSaves()}else{closeMenu()};' on="false">Saves</button><button id="modsButton" title="Brings up the Mod Manager" class="controlButton" onclick='if (showingMenu!="mods"){closeMenu();showModManager()}else{closeMenu()};' on="false">Mods</button><button id="settingsButton" title="Brings up the settings screen" class="controlButton" onclick='if (showingMenu!="settings"){closeMenu();showSettings()}else{closeMenu()};' on="false">Settings</button>
+					<button id="shiftButton" title="Toggle Shift key" class="controlButton" onclick='toggleShift();focusGame();' on="false" style="display:none">↑</button>
+					<button id="pauseButton" title="Pause/play the simulation" class="controlButton" onclick='togglePause();focusGame();' on="false">Pause</button>
+					<button id="frameButton" title="Pause and play one frame" class="controlButton" onclick='doFrame();focusGame();' on="false">&gt;</button>
+					<button id="sizeDownButton" title="Decrease the brush size" class="controlButton" onclick="mouseSize -= shiftDown?mouseSize-1:2;checkMouseSize(true);centerMouse();focusGame();">-</button>
+					<button id="sizeUpButton" title="Increase the brush size" class="controlButton" onclick="mouseSize += shiftDown?14:2;checkMouseSize(true);centerMouse();focusGame();">+</button>
+					<button id="resetButton" title="Clear the entire scene" class="controlButton" onclick="resetPrompt();">Reset</button>
+					<button id="replaceButton" title="Override existing pixels when placing" class="controlButton" onclick='if (mode == "replace") {mode = null;this.setAttribute("on","false");}else {mode = "replace";this.setAttribute("on","true");};focusGame();' on="false">Replace</button>
+					<button id="elemSelectButton" title="Select an element by name" class="controlButton" onclick='chooseElementPrompt();'>E</button>
+					<button id="tpsButton" title="Change the simulation Ticks Per Second (TPS)" class="controlButton" onclick='tpsPrompt()'>Tps</button>
+					<!--<button id="hideButton" title="Stops updating the scene to allow more resources towards simulation" class="controlButton" onclick='if (hiding) {hiding = false;this.setAttribute("on","false");}else {hiding = true;this.setAttribute("on","true");};focusGame();' on="false">Hide</button>-->
+					<button id="infoButton" title="Brings up the element info screen" class="controlButton" onclick='if (showingMenu!="info"){closeMenu();showInfo("")}else{closeMenu()};' on="false">Info</button>
+					<button id="savesBrowserButton" title="Brings up the Saves borwser" class="controlButton" onclick="if (showingMenu!='savesBrowser'){closeMenu();showSavesBrowser()}else closeMenu()">Browse saves</button>
+					<!-- <button id="savesButton" title="Brings up the Save & Load menu" class="controlButton" onclick='if (showingMenu!="saves"){closeMenu();showSaves()}else{closeMenu()};' on="false">Saves</button> -->
+					<button id="modsButton" title="Brings up the Mod Manager" class="controlButton" onclick='if (showingMenu!="mods"){closeMenu();showModManager()}else{closeMenu()};' on="false">Mods</button>
+					<button id="settingsButton" title="Brings up the settings screen" class="controlButton" onclick='if (showingMenu!="settings"){closeMenu();showSettings()}else{closeMenu()};' on="false">Settings</button>
 				</div>
-				<script>
+				<script nonce="OTQsMjI5LDQ1LDExOCwxNzEsMTk2LDQ3LDE1NA==">
 					// if it is the 1st of April, add a rainbow-colored button
 					if (!standalone && new Date().getMonth() == 3 && new Date().getDate() <= 3) {
 						// if url contains "fools=true"
@@ -18631,7 +18660,7 @@ window.onload = function() {
 				<!--<br><br><a style="color:lime" target="_blank" href="https://r74n.com/">WISHLIST ON STEAM<span style="color:red">(NEW)</span></a>-->
 				<!--<br><br><a style="color:lime" target="_blank" href="https://r74n.com/">PLAY AD-FREE ON STEAM<span style="color:red">(NEW)</span></a>-->
 			</small></div>
-			<script>
+			<script nonce="OTQsMjI5LDQ1LDExOCwxNzEsMTk2LDQ3LDE1NA==">
 				// version check
 				if (!settings["lastversion"] || settings["lastversion"]!==currentversion) {
 					document.getElementById("changelogButton").insertAdjacentHTML("beforeend",`<span style="color:red">(NEW)</span>`);
@@ -18682,7 +18711,7 @@ window.onload = function() {
 				<span class="menuTitle">Enabled Mods</span>
 				<ul class="menuText" id="modManagerList"></ul>
 				<span id="noMods" style="display:none">You have no mods enabled.<br><br></span>
-				<script>
+				<script nonce="OTQsMjI5LDQ1LDExOCwxNzEsMTk2LDQ3LDE1NA==">
 					// If enabledMods has items, add an li to modManagerList for each item with the href to the item, target blank, and the item's name, with "<span class="removeModX" onclick='removeMod('>X</span>" after the link
 					if (enabledMods.length > 0) {
 						modManagerList = document.getElementById("modManagerList");
@@ -18746,6 +18775,149 @@ window.onload = function() {
 					<span id="promptCancel" onclick="handlePrompt(false)" style="display:none">Cancel</span>
 					<span id="promptConfirm" onclick="handlePrompt(true)" style="display:none">Confirm</span>
 					<input type="text" id="promptInput" placeholder="Input..." onkeydown="if (event.keyCode == 13) {handlePrompt(this.value || null);}" enterkeyhint="done" style="display:none" autocomplete="off"></input>
+				</div>
+			</div>
+		</div>
+		<style>
+			.savesBrowserLoading {
+				color: #AAA;
+				width: 100%;
+				text-align: center;
+				display: block;
+			}
+			/* from https://cssloaders.github.io/ */
+			.loader {
+				width: 32px;
+				height: 32px;
+				border: 5px solid #AAA;
+				border-bottom-color: transparent;
+				border-radius: 50%;
+				display: inline-block;
+				box-sizing: border-box;
+				animation: rotation 1s linear infinite;
+
+				position: absolute;
+				top: calc(50% - 16px);
+				left: calc(50% - 16px);
+			}
+			@keyframes rotation {
+				0% {
+					transform: rotate(0deg);
+				}
+				100% {
+					transform: rotate(360deg);
+				}
+			}
+			.savesBrowserCard {
+				border: 1px solid white;
+				margin-top: .5em;
+				margin-bottom: 1em;
+				position: relative;
+				height: 30vw;
+				background-color: black;
+				overflow: hidden;
+			}
+			.savesBrowserCardTitle, .savesBrowserInfo, .savesBrowserTags {
+				display: block;
+				max-width: 50%;
+				text-overflow: ellipsis;
+				overflow: hidden;
+				white-space: nowrap;
+			}
+			.savesBrowserIncludedModsTitle {
+				display: block;
+			}
+			.savesBrowserInfo {
+				font-size: 0.85em;
+				color: #737373;
+			}
+			.savesBrowserTags {
+				font-size: 0.75em;
+				margin-top: .5em;
+				color: #aaa;
+			}
+			#savesBrowserParent {
+				max-width: 1000px;
+				max-height: 650px;
+				height: 80%;
+			}
+			.savesBrowserIncludedMods {
+				width: 30%;
+				height: 50%;
+			}
+			.savesBrowserIncludedMods ul::-webkit-scrollbar {
+				display: none;
+			}
+			.savesBrowserIncludedMods ul {
+				height: 100%;
+				overflow-y: scroll;
+				overflow-x: hidden;
+				margin-top: .5em;
+				margin-bottom: .5em;
+				-ms-overflow-style: none;
+				scrollbar-width: none;
+			}
+			.savesBrowserIncludedMods li {
+				font-size: 0.75em;
+				color: #f0f;
+			}
+			.savesBrowserIncludedMods .savesBrowserLoading {
+				text-align: left;
+				font-size: 0.75em;
+			}
+			.savesBrowserIncludedModsTitle {
+				font-size: 0.85em;
+				margin-top: 1em;
+			}
+			.savesBrowserButtons:hover {
+				color: #737373;
+				cursor: pointer;
+			}
+			.savesBrowserImage {
+				position: absolute;
+				height: 30vw;
+			}
+			.savesBrowserInfoBox {
+				position: absolute;
+				background-color: #1f1f1f;
+				width: 100%;
+				height: 100%;
+				clip-path: polygon(0 0, 60% 0, 40% 100%, 0% 100%);
+				border-bottom: 1px solid white;
+				z-index: 2;
+			}
+			.savesBrowserButtonBox {
+				position: absolute;
+				bottom: .5em;
+				display: flex;
+				flex-direction: row;
+				justify-content: space-around;
+				width: calc(40% - 1em);
+			}
+			.savesBrowserImageOverlay {
+				position: absolute;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				background: linear-gradient(to right, rgba(31, 31, 31, 0.7) 0%, rgba(31, 31, 31, 0.4) 50%, rgba(31, 31, 31, 0) 100%);
+				pointer-events: none;
+				z-index: 1;
+			}
+			.noMods {
+				font-size: 0.75em;
+				color: #737373;
+			}
+		</style>
+		<div id="savesBrowserParent" class="menuParent">
+			<div id="savesBrowserMenu" class="menuScreen">
+				<button class="XButton" onclick="closeMenu();">-</button>
+				<span class="menuTitle" id="genericMenuTitle">Saves browser</span>
+				<div class="menuText" style="padding-top:1em">
+					<div id="savesBrowserLoader">
+						<span class="savesBrowserLoading">Loading...</span>
+						<span class="loader"></span>
+					</div>
+					<div id="savesBrowser"></div>
 				</div>
 			</div>
 		</div>
@@ -18862,10 +19034,10 @@ Cancer, Landmine, Grenade, Smoke Grenade">?</span>
 						<span id="settingLabel-abszero">Abs Zero</span> <input type="number" value="-273.15" placeholder="-273.15" onchange="if(this.value===''){this.value=-273.15} absoluteZero=parseFloat(this.value); setSetting('abszero',absoluteZero)">&nbsp;
 					</span>
 					<span class="setting-span" style="text-align:center">
-						<input type="button" value="Reset Discovered" id="resetDiscovered" onclick="if(confirm('WARNING: This action will RESET ALL DISCOVERED ELEMENTS and refresh the page.')){settings.unlocked={};saveSettings();location.reload()}" class="settingsButton">
-						<input type="button" value="Reset All" id="resetAll" onclick="if(confirm('WARNING: This action will RESET ALL YOUR DATA, not including save slots, and refresh the page.')){localStorage.removeItem('settings');location.reload()}" class="settingsButton">
-						<input type="button" value="Clear Mods" id="clearMods" onclick="if(confirm('WARNING: This action will remove all enabled mods and refresh the page.')){localStorage.removeItem('enabledMods');location.reload()}" class="settingsButton">
-						<input type="button" value="Clear Saves" id="clearSaves" onclick="if(confirm('WARNING: This action will PERMANENTLY ERASE all local save slots.')){for (var i = 1; i <= 12; i++) {localStorage.removeItem('SandboxelsSaves/'+i)}; ;closeMenu();showSaves()}" class="settingsButton">
+						<input type="button" value="Reset Discovered" id="resetDiscovered" onclick="if(await confirm2('WARNING: This action will RESET ALL DISCOVERED ELEMENTS and refresh the page.')){settings.unlocked={};saveSettings();location.reload()}" class="settingsButton">
+						<input type="button" value="Reset All" id="resetAll" onclick="if(await confirm2('WARNING: This action will RESET ALL YOUR DATA, not including save slots, and refresh the page.')){localStorage.removeItem('settings');location.reload()}" class="settingsButton">
+						<input type="button" value="Clear Mods" id="clearMods" onclick="if(await confirm2('WARNING: This action will remove all enabled mods and refresh the page.')){localStorage.removeItem('enabledMods');location.reload()}" class="settingsButton">
+						<input type="button" value="Clear Saves" id="clearSaves" onclick="if(await confirm2('WARNING: This action will PERMANENTLY ERASE all local save slots.')){for (var i = 1; i <= 12; i++) {localStorage.removeItem('SandboxelsSaves/'+i)}; ;closeMenu();showSaves()}" class="settingsButton">
 					</span>
 					<span setting="worldgen" style="padding-bottom:0" class="setting-span" title="Default: Disabled">
 						<span id="settingLabel-worldgen">World Gen</span> <small>[Beta]</small> <select id="worldgenselect" onchange="setSetting('worldgen',this.value);this.nextElementSibling.innerText='Reset Scene'">
@@ -18936,7 +19108,7 @@ Cancer, Landmine, Grenade, Smoke Grenade">?</span>
 				<option value="xem">😂🗣</option>
 			</optgroup>
 		</select></p>
-		<script>
+		<script nonce="OTQsMjI5LDQ1LDExOCwxNzEsMTk2LDQ3LDE1NA==">
 			if (standalone) { // move langSelect to Settings
 				let span = document.getElementById("setting-span-lang");
 				span.appendChild(document.getElementById("langSelect"));
@@ -18968,7 +19140,7 @@ Cancer, Landmine, Grenade, Smoke Grenade">?</span>
 			}
 		</style>
 		<!-- <iframe id="newsletteriframe" width="450" height="250" style="border:1px solid #EEE; background:black; max-width:90%" frameborder="0" scrolling="no"></iframe> -->
-		<script>
+		<script nonce="OTQsMjI5LDQ1LDExOCwxNzEsMTk2LDQ3LDE1NA==">
 			window.addEventListener('load', function() {
 				// document.getElementById("newsletteriframe").src = "https://news.r74n.com/embed";
 				var langSelect = document.getElementById("langSelect");
@@ -18997,7 +19169,7 @@ Cancer, Landmine, Grenade, Smoke Grenade">?</span>
 		<p><span id="patronThanks">Thanks to our Patrons</span>: Serioustar, ggod, Midi_png, personman, fnl4y, PitsPower, swagg boi, moss, Suss, epsiloneridani, WeiChei, Trent, u2ce</p>
 		<p style="display:none" id="langCredit">Translation by R74n</p>
 		<p id="outro">Sandboxels is developed by R74n. Check out <a href="https://R74n.com" rel="author" target="_blank">our other projects</a>!</p>
-		<script>
+		<script nonce="OTQsMjI5LDQ1LDExOCwxNzEsMTk2LDQ3LDE1NA==">
 			// add the above elements programmatically when the page loads
 			window.addEventListener('load', function() {
 				if (standalone) return;
@@ -19044,7 +19216,7 @@ Cancer, Landmine, Grenade, Smoke Grenade">?</span>
 </div>
 </div>
 
-<script>
+<script nonce="OTQsMjI5LDQ1LDExOCwxNzEsMTk2LDQ3LDE1NA==">
 	let deferredPrompt;
 	window.addEventListener('beforeinstallprompt', (e) => {
 		e.preventDefault();
@@ -19054,7 +19226,7 @@ Cancer, Landmine, Grenade, Smoke Grenade">?</span>
 	});
 </script>
 
-<script>
+<script nonce="OTQsMjI5LDQ1LDExOCwxNzEsMTk2LDQ3LDE1NA==">
 	// Language Loader Part 3 (GUI)
 	if (lang) {
 		for (let key in lang) {
@@ -19101,13 +19273,17 @@ Cancer, Landmine, Grenade, Smoke Grenade">?</span>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-93720349-9"></script>
-<script>
+<script nonce="OTQsMjI5LDQ1LDExOCwxNzEsMTk2LDQ3LDE1NA==">
 	window.dataLayer = window.dataLayer || [];
 	function gtag(){dataLayer.push(arguments);}
 	gtag('js', new Date());
 	gtag('config', 'UA-93720349-9');
 </script>
-
+<script src="/modules/eventHandlers.js"></script>
+<script type="module" src="/modules/boxes.js"></script>
+<script type="module" src="/modules/browser.js"></script>
+<script type="module" src="/modules/saves.js"></script>
+<script type="module" src="/main.js"></script>
 </body>
 
 </html>

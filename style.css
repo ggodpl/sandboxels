@@ -150,7 +150,7 @@ kbd:active {filter: brightness(70%);}
 #promptParent {
     height: 50%;
 }
-#infoSearch, #modManagerUrl, #promptInput {
+#infoSearch, #modManagerUrl, #promptInput, #dialogInput {
     position: fixed;
     bottom: 0px;
     left: 0px;
