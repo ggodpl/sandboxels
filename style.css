@@ -6,11 +6,11 @@ html, body {
 /* Load the font PressStart2P-Regular.ttf */
 @font-face {
     font-family: 'Press Start 2P';
-    src: url('fonts/PressStart2P-Regular.ttf');
+    src: url('/.proxy/fonts/PressStart2P-Regular.ttf');
 }
 @font-face {
     font-family: 'VT323';
-    src: url('fonts/VT323-Regular.ttf');
+    src: url('/.proxy/fonts/VT323-Regular.ttf');
 }
 body {
     font-family: 'Press Start 2P', 'VT323', Arial;
