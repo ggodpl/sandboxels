@@ -18813,9 +18813,9 @@ window.onload = function() {
 				margin-top: .5em;
 				margin-bottom: 1em;
 				position: relative;
-				height: 30vw;
 				background-color: black;
 				overflow: hidden;
+				aspect-ratio: 3 / 1;
 			}
 			.savesBrowserCardTitle, .savesBrowserInfo, .savesBrowserTags {
 				display: block;
@@ -18875,7 +18875,7 @@ window.onload = function() {
 			}
 			.savesBrowserImage {
 				position: absolute;
-				height: 30vw;
+				height: 100%;
 			}
 			.savesBrowserInfoBox {
 				position: absolute;
@@ -19279,7 +19279,7 @@ Cancer, Landmine, Grenade, Smoke Grenade">?</span>
 	gtag('js', new Date());
 	gtag('config', 'UA-93720349-9');
 </script>
-<script src="/modules/eventHandlers.js"></script>
+<script type="module" src="/modules/eventHandlers.js"></script>
 <script type="module" src="/modules/boxes.js"></script>
 <script type="module" src="/modules/browser.js"></script>
 <script type="module" src="/modules/saves.js"></script>
