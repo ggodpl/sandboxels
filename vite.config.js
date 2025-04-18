@@ -2,29 +2,16 @@ import {defineConfig} from 'vite';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-<<<<<<< Updated upstream
-    base: '/discord/',
-    envDir: '../',
-    server: {
-        proxy: {
-            '/api': {
-                target: 'http://localhost:3010',
-                changeOrigin: true,
-                secure: false,
-                ws: true,
-            },
-=======
     base: "/discord/",
     envDir: './',
     server: {
         proxy: {
-        '/api': {
-            target: "http://localhost:3010",
-            changeOrigin: true,
-            secure: false,
-            ws: true,
-        }
->>>>>>> Stashed changes
+            '/api': {
+                target: "http://localhost:3010",
+                changeOrigin: true,
+                secure: false,
+                ws: true,
+            }
         },
         hmr: {
 	    protocol: "wss",

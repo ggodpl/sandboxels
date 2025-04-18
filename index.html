@@ -15237,6 +15237,7 @@ behaviorRules = {
 							addMod(saveConfig.mods[i],true);
 						}
 					}
+					localStorage.setItem("lateLoadSave", JSON.stringify(saveJSON));
 					window.location.reload();
 				}
 			}
