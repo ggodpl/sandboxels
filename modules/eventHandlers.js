@@ -25,7 +25,20 @@ document.addEventListener("click", (ev) => {
             centerMouse();
             focusGame();
             break;
-        case "elemSelectPrompt":
+        case "resetButton":
+            resetPrompt();
+            break;
+        case "replaceButton":
+            if (mode == "replace") {
+                mode = null;
+                ev.target.setAttribute("on", "false");
+            } else {
+                mode = "replace";
+                ev.target.setAttribute("on","true");
+            };
+            focusGame();
+            break;
+        case "elemSelectButton":
             chooseElementPrompt();
             break;
         case "tpsButton":
