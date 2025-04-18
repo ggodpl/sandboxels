@@ -38,12 +38,14 @@ export async function loadOnlineSave(id) {
 }
 
 function checkLateLoad() {
-    const lateSave = localStorage.getItem("lateLoadSave");
-
-    if (lateSave) {
-        loadSave(JSON.parse(lateSave));
-        localStorage.removeItem("lateLoadSave");
-    }
+    setTimeout(() => {
+        const lateSave = localStorage.getItem("lateLoadSave");
+    
+        if (lateSave) {
+            loadSave(JSON.parse(lateSave));
+            localStorage.removeItem("lateLoadSave");
+        }
+    }, 1000);
 }
 
 runAfterLoad(checkLateLoad);
